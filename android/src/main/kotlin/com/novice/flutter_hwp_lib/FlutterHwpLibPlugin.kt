@@ -1,12 +1,15 @@
 package com.novice.flutter_hwp_lib
 
-import androidx.annotation.NonNull
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import kr.dogfoot.hwplib.`object`.HWPFile
+import kr.dogfoot.hwplib.reader.HWPReader
+import kr.dogfoot.hwplib.tool.textextractor.TextExtractMethod
+import kr.dogfoot.hwplib.tool.textextractor.TextExtractor
+
 
 /** FlutterHwpLibPlugin */
 class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler {
@@ -31,5 +34,21 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
+  }
+
+  private fun hwpTest(filePath: String) {
+      val hwpFile: HWPFile
+      val hwpText: String
+      try {
+          hwpFile = HWPReader.fromFile(filePath)
+          hwpText = TextExtractor.extract(
+              hwpFile,
+              TextExtractMethod.InsertControlTextBetweenParagraphText
+          )
+          println("===== hwp text extractor =====")
+          println("hwpText = $hwpText")
+      } catch (e: Exception) {
+          e.printStackTrace()
+      }
   }
 }

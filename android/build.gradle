@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 26
     }
 
     dependencies {
@@ -65,4 +65,8 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    implementation 'kr.dogfoot:hwplib:1.1.1'
 }
