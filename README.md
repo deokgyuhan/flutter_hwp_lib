@@ -45,3 +45,6 @@ https://stackoverflow.com/questions/54329023/how-to-import-external-ios-framewor
 
 todo: 플러그인에서 처리해야 하므로 원본 소스를 다시 패키징해야 되는지 좀더 검토해보기
 
+### 2023.09.08 중간검토
+* android 지원을 먼저 작업하고 pub.dev에 게시
+* ios 지원은 나중에 좀더 swift에 익숙해진다음 작업하는 것으로 미룸.

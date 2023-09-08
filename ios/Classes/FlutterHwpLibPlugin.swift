@@ -1,7 +1,10 @@
 import Flutter
 import UIKit
+import CoreHwp
 
 public class FlutterHwpLibPlugin: NSObject, FlutterPlugin {
+  var temp: HwpFile
+
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "flutter_hwp_lib", binaryMessenger: registrar.messenger())
     let instance = FlutterHwpLibPlugin()
