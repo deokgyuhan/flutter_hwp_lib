@@ -18,17 +18,9 @@
 
 ## 2. Screenshots
 
-
-| Home                                            | Select File                                           | MethodChannel Call                                     | EventChannel Call                                     |
-|-------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------|-------------------------------------------------------|
-| <img src="./screenshots/home.jpeg" width="200"> | <img src="./screenshots/fileSelect.jpeg" width="200"> | <img src="./screenshots/method_call.jpeg" width="200"> | <img src="./screenshots/event_call.jpeg" width="200"> |
-
-
-
-| Home                           | Select File                                 | MethodChannel Call                | EventChannel Call             |
-|--------------------------------|---------------------------------------------|-----------------------------------|--------------------------------|
-| <img src="screenshots/home.jpeg" width="200"> | <img src="screenshots/fileSelect.jpeg" width="200"> | <img src="screenshots/method_call.jpeg" width="200"> | <img src="screenshots/event_call.jpeg" width="200"> |
-
+|             Home              |                Select File                 |                 MethodChannel Call                 |                EventChannel Call                 |
+|:-----------------------------:|:------------------------------------------:|:--------------------------------------------------:|:------------------------------------------------:|
+| ![Home](screenshots/home.png) | ![Select File](screenshots/fileSelect.png) | ![MethodChannel Call](screenshots/method_call.png) | ![EventChannel Call](screenshots/event_call.png) |
 
 
 ## 3. Usage
