@@ -48,3 +48,8 @@ todo: 플러그인에서 처리해야 하므로 원본 소스를 다시 패키�
 ### 2023.09.08 중간검토
 * android 지원을 먼저 작업하고 pub.dev에 게시
 * ios 지원은 나중에 좀더 swift에 익숙해진다음 작업하는 것으로 미룸.
+
+* https://github.com/neolord0/hwplib api 작성
+
+## 2023.09.10 
+* 프로젝트 수정. android를 먼저 지원하고 ios는 제외하고 다른 방안 모색
