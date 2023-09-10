@@ -85,15 +85,13 @@ class _MyAppState extends State<MyApp> {
                     print("----------------->full path: " + full_path);
                   }
 
-                  var test = await _flutterHwpLibPlugin.extractingText(filePath!);
-
-                  print('result: ---------->' + test!);
+                  var text = await _flutterHwpLibPlugin.extractingText(filePath!);
 
                 } else {
                   // User canceled the picker
                 }
               },
-              child: Text("파일 선택"),
+              child: Text("Select file"),
             ),
 
             ElevatedButton(
@@ -115,7 +113,7 @@ class _MyAppState extends State<MyApp> {
                   // User canceled the picker
                 }
               },
-              child: Text("Big File 선택"),
+              child: Text("Select file"),
             ),
 
             Container(
@@ -150,8 +148,11 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  StreamSubscription<dynamic>? _eventSubscription;
+  Future<String?> _extractingText(String filePath) async {
+    return await _flutterHwpLibPlugin.extractingText(filePath!);
+  }
 
+  StreamSubscription<dynamic>? _eventSubscription;
   void _extractingTextFromBigFile(String filePath) async {
 
     _clearLog();

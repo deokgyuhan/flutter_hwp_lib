@@ -47,8 +47,7 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     } else if(call.method == "extractingText") {
       val filePath = call.argument<String>("filePath")
         if (filePath != null) {
-            extractingText(filePath)
-            result.success("success")
+            result.success(extractingText(filePath))
         }  else {
             result.success("failure")
         }
@@ -77,6 +76,7 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     methodChannel.setMethodCallHandler(null)
     eventChannel?.setStreamHandler(null)
   }
+
 //    private fun extractingTextFromBigFile(filePath: String) {
 //        class MyListener : TextExtractorListener {
 //            override fun paragraphText(text: String) {
@@ -90,6 +90,7 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 //            e.printStackTrace()
 //        }
 //    }
+
     private fun extractingTextFromBigFile(filePath: String, eventSink: EventChannel.EventSink) {
 
         class MyListener : TextExtractorListener {
@@ -110,7 +111,7 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
             e.printStackTrace()
         }
     }
-  private fun extractingText(filePath: String) {
+  private fun extractingText(filePath: String) : String {
       val hwpFile: HWPFile
       val hwpText: String
       try {
@@ -120,17 +121,17 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
               TextExtractMethod.InsertControlTextBetweenParagraphText
           )
 
-          println("===== hwp text extractor =====")
-
-          // 문자열을 개행 문자로 분할하여 배열 생성
-          val lines = hwpText.split("\n")
-
-          // 빈 공백이 아닌 값만 포함된 새로운 배열 생성
-          val nonEmptyLines = lines.filter { it.isNotBlank() }
-
-          println("hwpText = $nonEmptyLines")
+          return hwpText
+          
+//          println("===== hwp text extractor =====")
+//          // 문자열을 개행 문자로 분할하여 배열 생성
+//          val lines = hwpText.split("\n")
+//          // 빈 공백이 아닌 값만 포함된 새로운 배열 생성
+//          val nonEmptyLines = lines.filter { it.isNotBlank() }
+//          println("hwpText = $nonEmptyLines")
       } catch (e: Exception) {
           e.printStackTrace()
+          return "faliure"
       }
   }
 
