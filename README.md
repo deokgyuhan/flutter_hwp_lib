@@ -1,57 +1,49 @@
 # flutter_hwp_lib
 
-A flutter hwp libary plugin project.
+"flutter_hwp_lib plugin project"
 
-### 2023.08.30 begin
-readme 작성에 필요한 메모만 기재하고 완료된후에는 정식으로 올리기전 README 작성
+## 1. Introduction
 
-## Introduction
- - 한글파일에서 텍스트를 추출해야 되는 상황, pub.dev에 hwp에서 텍스트 추출 라이브러리 부재
- - 활용가능 라이브러리 서치 java로 작성되어 maven에서 jar로 지원하는 라이브러리와 
-   swift로 작성된 package 라이브러리 발견
+* This project was initiated to extract text from HWP files created in the Hangul program by Hancom 
+  
+  and has been developed to make it usable in Flutter by utilizing the Java library called hwplib(https://github.com/neolord0/hwplib).
 
-### android used library
-https://github.com/neolord0/hwplib
 
-### ios used library
-https://github.com/sboh1214/Hwp-Swift
+* I would like to inform you that an API for extracting text has been written based on the examples provided by hwplib.
 
-1. 프로젝트 생성후 각 라이브러리를 사용할 수 있는지 flutter 환경에서 테스트 실시
-2. 각 소스를 분석하고 나서 android/ios에 공통적으로 사용할 수 있는 함수 도출
-3. 이번 작업에서는 원 저자의 소스를 내가 수정할 일은 없으며 단지 라이브러리에서 지원하는
-   함수명세에 따라서 flutter로 바인딩
-4. pub.dev에 publish
+ 
+* When utilizing the example, we used the file_picker library for dependency.
 
-#### android issue
 
-jetified-hwplib-1.1.1.jar 
-com.android.tools.r8.internal.k2: 
-MethodHandle.invoke and MethodHandle.invokeExact are 
-only supported starting with Android O (--min-api 26)
 
-uses-sdk:minSdkVersion 19 cannot be smaller than version 21
-declared in library [:integration_test] 
--> build.gradle, AndroidManifest.xml 관련 사항 적용
--> 빌드 성공
+## 2. Screenshots
 
-todo: 실제 기기에서 한글파일을 읽어와서 되는지 테스트 해볼것(예정)
+| Home                           | Select File                                 | MethodChannel Call                | EventChannel Call             |
+|--------------------------------|---------------------------------------------|-----------------------------------|--------------------------------|
+| <img src="screenshots/home.jpeg" width="200"> | <img src="screenshots/fileSelect.jpeg" width="200"> | <img src="screenshots/method_call.jpeg" width="200"> | <img src="screenshots/event_call.jpeg" width="200"> |
 
-#### ios issue
 
-swift package 이용 레퍼런스
-https://ktuusj.medium.com/writing-flutter-plugin-package-2-e6b480113a46
-https://stackoverflow.com/questions/54329023/how-to-import-external-ios-framework-in-flutter-plugin
--> 모두 실패, ios에서는 podspec에서 external library import를 못하고 Podfile에서 가능.
 
-todo: 플러그인에서 처리해야 하므로 원본 소스를 다시 패키징해야 되는지 좀더 검토해보기
+## 3. Usage
+```dart
+import 'package:flutter_hwp_lib/flutter_hwp_lib.dart';
 
-### 2023.09.08 중간검토
-* android 지원을 먼저 작업하고 pub.dev에 게시
-* ios 지원은 나중에 좀더 swift에 익숙해진다음 작업하는 것으로 미룸.
+//plugin instance 
+final _flutterHwpLibPlugin = FlutterHwpLib();
 
-* https://github.com/neolord0/hwplib api 작성
+//extractingText
+var filePath = 'file path';
+var text = await _flutterHwpLibPlugin.extractingText(filePath);
 
-## 2023.09.10 
-* 프로젝트 수정. android를 먼저 지원하고 ios는 제외하고 다른 방안 모색
-* 스마트폰에서 한글파일 선택하고 text 추출 테스트 완료
-* https://github.com/neolord0/hwplib sample 단위로 api 작성(extractingText, extractingTextFromBigFile)
+//extractingTextFromBigFile
+var filePath = 'file path';
+await _flutterHwpLibPlugin.extractingTextFromBigFile(filePath).listen((event) {
+//event handler
+});
+```
+
+## Reference
+1. hwplib library: https://github.com/neolord0/hwplib
+2. file_picker plugin: https://pub.dev/packages/file_picker
+3. The document titled 'Hangeul Document File Structure 5.0' 
+   : http://www.hancom.com/etc/hwpDownload.do?gnb0=269&gnb1=271&gnb0=101&gnb1=140.
