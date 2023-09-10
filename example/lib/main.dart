@@ -21,7 +21,6 @@ class _MyAppState extends State<MyApp> {
 
   List<String> _events = [];
   final _eventStreamController = StreamController<String>();
-
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -63,101 +62,134 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text(
+              'flutter_hwp_lib example',
+              style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+          ),
         ),
-        body: Column(
-          children: [
-            Center(
-              child: Text('Running on: $_platformVersion\n'),
-            ),
+        body:  Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10,),
+            child: Column(
+              children: [
+                // Center(
+                //   child: Text('Running on: $_platformVersion\n'),
+                // ),
+                SizedBox(height: 20,),
+                Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'MethodChannel Call',
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              String? filePath = "";
+                              String full_path = "";
 
-            ElevatedButton(
-              onPressed: () async {
-                String? filePath = "";
-                String full_path = "";
+                              FilePickerResult? result = await FilePicker.platform.pickFiles();
+                              if (result != null) {
+                                filePath =  result.files.single.path;
+                                full_path = filePath.toString();
+                                if(filePath != null) {
+                                  print("----------------->filePath: " + filePath);
+                                  print("----------------->fullPath: " + full_path);
+                                  await _extractingText(filePath);
+                                }
 
-                FilePickerResult? result = await FilePicker.platform.pickFiles();
-                if (result != null) {
-                  filePath =  result.files.single.path;
-                  full_path = filePath.toString();
-                  if(filePath != null) {
-                    print("----------------->filePath: " + filePath);
-                    print("----------------->full path: " + full_path);
-                  }
-
-                  var text = await _flutterHwpLibPlugin.extractingText(filePath!);
-
-                } else {
-                  // User canceled the picker
-                }
-              },
-              child: Text("Select file"),
-            ),
-
-            ElevatedButton(
-              onPressed: () async {
-                String? filePath = "";
-                String full_path = "";
-
-                FilePickerResult? result = await FilePicker.platform.pickFiles();
-                if (result != null) {
-                  filePath =  result.files.single.path;
-                  full_path = filePath.toString();
-                  if(filePath != null) {
-                    print("----------------->filePath: " + filePath);
-                    print("----------------->full path: " + full_path);
-
-                    _extractingTextFromBigFile(filePath);
-                  }
-                } else {
-                  // User canceled the picker
-                }
-              },
-              child: Text("Select file"),
-            ),
-
-            Container(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10,),
-                child: Container(
-                  width: double.infinity,
-                  // height: double.infinity,
-                  height:  MediaQuery.of(context).size.height*0.32,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child:
-                  ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _events.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                          title: Text(
-                            _events[index],
-                            style: TextStyle(fontSize: 15,),
-                          )
-                      );
-                    },
-                  ),
+                              } else {
+                                // User canceled the picker
+                              }
+                            },
+                            child: Text("Select file"),
+                          ),
+                        ]),
+                  ],
                 ),
-              ),
-            ),
-          ],
-        ),
+                SizedBox(height: 20,),
+                Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'EventChannel Call',
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              String? filePath = "";
+                              String full_path = "";
+
+                              FilePickerResult? result = await FilePicker.platform.pickFiles();
+                              if (result != null) {
+                                filePath =  result.files.single.path;
+                                full_path = filePath.toString();
+                                if(filePath != null) {
+                                  print("----------------->filePath: " + filePath);
+                                  print("----------------->fullPath: " + full_path);
+
+                                  _extractingTextFromBigFile(filePath);
+                                }
+                              } else {
+                                // User canceled the picker
+                              }
+                            },
+                            child: Text("Select file"),
+                          ),
+                        ]),
+                    SizedBox(height: 10,),
+
+                    Container(
+                      child: Container(
+                        width: double.infinity,
+                        // height: double.infinity,
+                        height:  MediaQuery.of(context).size.height*0.6,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child:
+                        ListView.builder(
+                          controller: _scrollController,
+                          itemCount: _events.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                                title: Text(
+                                  _events[index],
+                                  style: TextStyle(fontSize: 15,),
+                                )
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )),
       ),
     );
   }
 
-  Future<String?> _extractingText(String filePath) async {
-    return await _flutterHwpLibPlugin.extractingText(filePath!);
+  Future<void> _extractingText(String filePath) async {
+    _clearLog();
+    _eventStreamController.sink.add('MethodChannel Call...');
+
+    var text = await _flutterHwpLibPlugin.extractingText(filePath);
+    _eventStreamController.sink.add('-> '+text!);
+    _addEvent('MethodChannel Call...');
+    _addEvent(text);
   }
 
   StreamSubscription<dynamic>? _eventSubscription;
   void _extractingTextFromBigFile(String filePath) async {
 
     _clearLog();
-    _eventStreamController.sink.add('Starting...');
+    _eventStreamController.sink.add('EventChannel Call...');
 
+    _addEvent('EventChannel Call...');
     _eventSubscription =  await _flutterHwpLibPlugin
         .extractingTextFromBigFile(filePath)
         .listen((event) {
