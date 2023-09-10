@@ -26,4 +26,12 @@ abstract class FlutterHwpLibPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<String?> extractingText(String filePath) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Stream<dynamic> extractingTextFromBigFile(String filePath)  {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }

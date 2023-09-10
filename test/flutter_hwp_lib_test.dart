@@ -10,6 +10,18 @@ class MockFlutterHwpLibPlatform
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<String?> extractingText(String filePath) {
+    // TODO: implement extractingText
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream extractingTextFromBigFile(String filePath) {
+    // TODO: implement extractingTextFromBigFile
+    throw UnimplementedError();
+  }
 }
 
 void main() {
