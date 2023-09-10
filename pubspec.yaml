@@ -1,6 +1,6 @@
 name: flutter_hwp_lib
 description: flutter_hwp_lib plugin project.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/deokgyuhan/flutter_hwp_lib
 
 environment:
@@ -36,8 +36,6 @@ flutter:
     platforms:
       android:
         package: com.novice.flutter_hwp_lib
-        pluginClass: FlutterHwpLibPlugin
-      ios:
         pluginClass: FlutterHwpLibPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
