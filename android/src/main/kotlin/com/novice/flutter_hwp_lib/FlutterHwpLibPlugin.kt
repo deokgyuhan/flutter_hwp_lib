@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kr.dogfoot.hwplib.`object`.HWPFile
@@ -17,9 +18,6 @@ import kr.dogfoot.hwplib.reader.HWPReader
 import kr.dogfoot.hwplib.tool.textextractor.TextExtractMethod
 import kr.dogfoot.hwplib.tool.textextractor.TextExtractor
 import kr.dogfoot.hwplib.tool.textextractor.TextExtractorListener
-import java.io.File
-import kotlin.io.print as print
-
 
 /** FlutterHwpLibPlugin */
 class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -59,8 +57,6 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   }
 
   private fun setupEventChannel() {
-      print("--------------------->setupEventChannel")
-
         eventChannel = EventChannel(_flutterPluginBinding!!.binaryMessenger, eventChannelName)
         eventChannel?.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(p0: Any?, eventSink: EventChannel.EventSink) {
@@ -69,7 +65,6 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
                 val filePath = argsMap?.get("filePath") as? String
 
                 if (filePath != null) {
-                    eventSink?.success("---------->" + filePath)
                     extractingTextFromBigFile(filePath, eventSink)
                 }
             }
@@ -96,9 +91,16 @@ class FlutterHwpLibPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 //        }
 //    }
     private fun extractingTextFromBigFile(filePath: String, eventSink: EventChannel.EventSink) {
+
         class MyListener : TextExtractorListener {
             override fun paragraphText(text: String) {
                 eventSink?.success(text)
+//                runBlocking {
+//                    launch {
+//                        result += " " + text
+//                        print(text)
+//                    }
+//                }
             }
         }
 

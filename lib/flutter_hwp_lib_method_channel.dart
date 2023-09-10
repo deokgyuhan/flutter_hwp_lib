@@ -26,6 +26,6 @@ class MethodChannelFlutterHwpLib extends FlutterHwpLibPlatform {
 
   @override
   Stream<dynamic> extractingTextFromBigFile(String filePath)  {
-    return eventChannel.receiveBroadcastStream([<String, dynamic>{'filePath': filePath}]);
+    return eventChannel.receiveBroadcastStream(<String, dynamic>{'filePath': filePath});
   }
 }

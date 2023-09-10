@@ -1,7 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_hwp_lib/flutter_hwp_lib.dart';
 
@@ -158,14 +157,11 @@ class _MyAppState extends State<MyApp> {
     _clearLog();
     _eventStreamController.sink.add('Starting...');
 
-    _eventSubscription = await _flutterHwpLibPlugin
+    _eventSubscription =  await _flutterHwpLibPlugin
         .extractingTextFromBigFile(filePath)
         .listen((event) {
-
-      _eventStreamController.sink.add('-> '+event);
-
-      _addEvent(event);
-
+          _eventStreamController.sink.add('-> '+event);
+          _addEvent(event);
       print('----------------------->event: ' + event);
     });
   }
@@ -176,7 +172,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void _addEvent(String event) {
+  void _addEvent(String event)  {
     setState(() {
       _events.add(event);
     });
